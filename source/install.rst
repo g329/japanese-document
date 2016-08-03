@@ -1,20 +1,23 @@
-Install Guide
-=============
+インストールガイド
+=========
+
 
 .. _before_install:
 
-Before installing Chainer
--------------------------
+事前準備
+----
 
-We recommend these platforms.
+以下のプラットフォームでの利用を推奨しています.
 
 * `Ubuntu <http://www.ubuntu.com/>`_ 14.04 LTS 64bit
 * `CentOS <https://www.centos.org/>`_ 7 64bit
 
-Chainer is supported on Python 2.7.6+, 3.4.3+, 3.5.1+.
-Chainer uses C++ compiler such as g++.
-You need to install it before installing Chainer.
-This is typical installation method for each platform::
+ChainerはPython 2.7.6+, 3.4.3+, 3.5.1+をサポートしています.
+Chainerはg++などのC++コンパイラを使用します.
+Chainerをインストールする前に, C++コンパイラをインストールしてください.
+各推奨プラットフォームでは, 以下のコマンドでインストールすることができます.
+
+.. code-block:: bash
 
   # Ubuntu 14.04
   $ apt-get install g++
@@ -22,52 +25,58 @@ This is typical installation method for each platform::
   # CentOS 7
   $ yum install gcc-c++
 
-If you use old ``setuptools``, upgrade it::
+``setuptools`` を, 以下のコマンドにより最新版にしてください
+
+.. code-block:: bash
 
   $ pip install -U setuptools
 
 
-Install Chainer
----------------
+Chainerのインストール
+--------------
 
-Chainer depends on these Python packages:
+Chainerは以下のパッケージに依存しています.
 
 * `NumPy <http://www.numpy.org/>`_ 1.9, 1.10, 1.11
 * `Six <https://pythonhosted.org/six/>`_ 1.9
 
-CUDA support
+Chainerは, 以下のバージョンのCUDAをサポートしています.
 
 * `CUDA <https://developer.nvidia.com/cuda-zone>`_ 6.5, 7.0, 7.5
 * `filelock <https://filelock.readthedocs.org>`_
 
-cuDNN support
+Chainerは, 以下のバージョンのcuDNNをサポートしています.
 
 * `cuDNN <https://developer.nvidia.com/cudnn>`_ v2, v3, v4, v5
 
-Caffe model support
+Chainerは, 以下のバージョンのCaffe Modelをサポートしています.
 
 * `Protocol Buffers <https://developers.google.com/protocol-buffers/>`_
-* protobuf>=3.0.0 is required for Py3
+* Py3では, protobuf>=3.0.0を必要としています.
 
-All these libraries are automatically installed with ``pip`` or ``setup.py``.
+上記のライブラリはすべて ``pip`` や ``setup.py`` でChainerと同時にインストールされます.
 
-HDF5 serialization is optional
+HDF5は, 必要に応じてインストールしてください.
 
 * `h5py <http://www.h5py.org/>`_ 2.5.0
 
 
-Install Chainer via pip
-~~~~~~~~~~~~~~~~~~~~~~~
+pipを用いたインストール方法
+~~~~~~~~~~~~~~~
 
-We recommend to install Chainer via pip::
+以下のように, pipを用いてインストールすることを推奨します.
+
+.. code-block:: bash
 
   $ pip install chainer
 
 
-Install Chainer from source
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ソースコードからのインストール方法
+~~~~~~~~~~~~~~~~~
 
-You can use ``setup.py`` to install Chainer from source::
+ソースコードからインストールする際は, 下記のように ``setup.py`` を使ってください.
+
+.. code-block:: bash
 
   $ tar zxf chainer-x.x.x.tar.gz
   $ cd chainer-x.x.x
@@ -76,85 +85,102 @@ You can use ``setup.py`` to install Chainer from source::
 
 .. _install_error:
 
-When an error occurs...
-~~~~~~~~~~~~~~~~~~~~~~~
+インストールに失敗した際は...
+~~~~~~~~~~~~~~~~
 
-Use ``-vvvv`` option with ``pip`` command.
-That shows all logs of installation. It may helps you::
+``-vvvv`` オプションを ``pip`` コマンドに付けて実行してください.
+インストールログが表示されます.解決手段を見つけることができるかもしれません.
+
+.. code-block:: bash
 
   $ pip install chainer -vvvv
 
 
-Install Chainer with CUDA
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Chainerのインストール方法（CUDA利用）
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-You need to install CUDA Toolkit before installing Chainer.
-If you have CUDA in a default directory or set ``CUDA_PATH`` correctly, Chainer installer finds CUDA automatically::
+CUDAツールキットは, Chainerの前にインストールする必要があります.
+``CUDA_PATH`` が正しく設定されていれば, ChainerのインストーラはCUDAを自動的に検知します.
+
+.. code-block:: bash
 
   $ pip install chainer
 
 
 .. note::
 
-   Chainer installer looks up ``CUDA_PATH`` environment variable first.
-   If it is empty, the installer looks for ``nvcc`` command from ``PATH`` environment variable and use its parent directory as the root directory of CUDA installation.
-   If ``nvcc`` command is also not found, the installer tries to use the default directory for Ubuntu ``/usr/local/cuda``.
+   Chainerのインストーラは環境変数 ``CUDA_PATH`` を最初に探します.
+   未設定ならば, Chainerのインストーラは環境変数 ``PATH`` から ``nvcc`` コマンドを探し，その親ディレクトリをCUDAインストール時のルートディレクトリとみなします.
+   ``nvcc`` コマンドも見つからない場合, インストーラは ``/usr/local/cuda`` をデフォルト設定として利用します.
 
 
-If you installed CUDA into a non-default directory, you need to specify the directory with ``CUDA_PATH`` environment variable::
+もしもあなたがCUDAをデフォルトでないディレクトリにインストールしていた場合, 環境変数 ``CUDA_PATH`` を正しく設定する必要があります.
+
+.. code-block:: bash
 
   $ CUDA_PATH=/opt/nvidia/cuda pip install chainer
 
 
 .. warning::
 
-   If you want to use ``sudo`` to install Chainer, note that ``sudo`` command initializes all environment variables.
-   Please specify ``CUDA_PATH`` environment variable inside ``sudo`` like this::
+  ``sudo`` をChainerのインストール時に使いたい場合,  ``sudo`` コマンドはすべての環境変数を初期化することに注意してください.
+  以下のようにして, 環境変数 ``CUDA_PATH`` を ``sudo`` に明示的に追加してください.
 
-      $ sudo CUDA_PATH=/opt/nvidia/cuda pip install chainer
+.. code-block:: bash
+
+  $ sudo CUDA_PATH=/opt/nvidia/cuda pip install chainer
+
 
 
 .. _install_cudnn:
 
-Install Chainer with CUDA and cuDNN
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Chainerのインストール方法（CUDA, cuDNN利用）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-cuDNN is a library for Deep Neural Networks that NVIDIA provides.
-Chainer can use cuDNN.
-If you want to enable cuDNN, install cuDNN and CUDA before installing Chainer.
-We recommend you to install cuDNN to CUDA directory.
-For example if you uses Ubuntu Linux, copy ``.h`` files to ``include`` directory and ``.so`` files to ``lib64`` directory::
+cuDNNはNVIDIA社が提供している, Deep Neural Networksのためのライブラリです.
+Chainerは, cuDNNを利用することができます.
+cuDNNを利用したい場合, Chainerをインストールする前にcuDNNとCUDAをインストールしてください.
+CUDAと同じディレクトリにcuDNNをインストールすることをお勧めします.
+Ubuntuを使っている場合, ``.h`` ファイルを ``include`` ディレクトリに, ``.so`` ファイルを ``lib64`` ディレクトリにコピーしてください.
+
+.. code-block:: bash
 
   $ cp /path/to/cudnn.h $CUDA_PATH/include
   $ cp /path/to/libcudnn.so* $CUDA_PATH/lib64
 
-The destination directories depend on your environment.
+対象ディレクトリは環境により異なります
 
+Chainerのインストール方法(開発者向け)
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Install Chainer for developers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ChainerはCythonを使用します(>= 0.23).
+開発者の方々は, ``pyx`` ファイルからC++のソースコードを再生成するためにCythonを利用する必要があります.
+``pip`` に ``-e`` オプションを付け,編集可能モードで利用することをお勧めします.
 
-Chainer uses Cython (>=0.23).
-Developers need to use Cython to regenerate C++ sources from ``pyx`` files.
-We recommend to use ``pip`` with ``-e`` option for editable mode::
+.. code-block:: bash
 
   $ pip install -U cython
   $ cd /path/to/chainer/source
   $ pip install -e .
 
-Users need not to install Cython as a distribution package of Chainer only contains generated sources.
 
+Chainerに含まれるソースコードを利用するのみの場合, Cythonをインストールする必要はありません.
 
-Support HDF5 serialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+HDF5によるシリアライズのサポート
+~~~~~~~~~~~~~~~~~~
 
-Install h5py manually to activate HDF5 serialization.
-This feature is optional::
+HDF5によるシリアライズを有効にしたい場合, h5pyを手動でインストールしてください.
+この機能は必須ではありません.
+
+.. code-block:: bash
 
   $ pip install h5py
 
-Before installing h5py, you need to install libhdf5.
-It depends on your environment::
+
+h5pyをインストールする前に, libhdf5をインストールする必要があります.
+インストール方法は, 環境により異なります.
+
+.. code-block:: bash
 
   # Ubuntu 14.04
   $ apt-get install libhdf5-dev
@@ -164,72 +190,78 @@ It depends on your environment::
   $ yum install hdf5-devel
 
 
-Uninstall Chainer
------------------
+Chainerのアンインストール方法
+------------------
 
-Use pip to uninstall Chainer::
+pipを用いて, Chainerをアンインストールしてください.
+
+.. code-block:: bash
 
   $ pip uninstall chainer
 
+
 .. note::
 
-   When you upgrade Chainer, ``pip`` sometimes installed various version of Chainer in ``site-packages``.
-   Please uninstall it repeatedly until ``pip`` returns an error.
+   Chainerをアップグレードする際, ``pip`` は時々 ``site-packages`` に異なるバージョンのChainerをインストールすることがあります.
+   ``pip`` がエラーを返すまで, アンインストールし続けてください.
 
 
-Upgrade Chainer
+Chainerのアップグレード
 ---------------
 
-Just use ``pip`` with ``-U`` option::
+``-U`` オプションを付けて, ``pip`` を実行してください.
+
+.. code-block:: bash
 
   $ pip install -U chainer
 
 
-Reinstall Chainer
------------------
+Chainerの再インストール
+---------------
 
-If you want to reinstall Chainer, please uninstall Chainer and then install it.
-We recommend to use ``--no-cache-dir`` option as ``pip`` sometimes uses cache::
+Chainerを再インストールしたい場合, まずChainerをアンインストールしてください.
+再インストールする際, ``--no-cache-dir`` オプションを付けて ``pip`` を実行することをおすすめします.
+
+.. code-block:: bash
 
   $ pip uninstall chainer
   $ pip install chainer --no-cache-dir
 
-When you install Chainer without CUDA, and after that you want to use CUDA, please reinstall Chainer.
-You need to reinstall Chainer when you want to upgrade CUDA.
+CUDAなしでChainerをインストールして, CUDAを使いたくなった場合, Chainerを再インストールしてください.
+CUDAをアップグレードしたくなった場合も, Chainerを再インストールする必要があります.
 
 
-What "recommend" means?
------------------------
+"推奨"の意味
+-------
 
-We tests Chainer automatically with Jenkins.
-All supported environments are tested in this environment.
-We cannot guarantee that Chainer works on other environments.
-
-
-FAQ
----
-
-The installer says "hdf5.h is not found"
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You don't have libhdf5.
-Please install hdf5.
-See :ref:`before_install`.
+私達はJenkinsを用いてChainerの動作確認を行っています.
+その他の環境でのChainerの動作については, 保証できません.
 
 
-MemoryError happens
-~~~~~~~~~~~~~~~~~~~
+よくある質問
+------
 
-You maybe failed to install Cython.
-Please install it manually.
-See :ref:`install_error`.
+インストール時に "hdf5.h is not found"というメッセージが表示される
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+libhdf5を持っていない可能性があります.
+hdf5をインストールしてください.
+参考 :ref:`before_install`.
 
 
-Examples says "cuDNN is not enabled"
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MemoryErrorが発生する
+~~~~~~~~~~~~~~~~
 
-You failed to build Chainer with cuDNN.
-If you don't need cuDNN, ignore this message.
-Otherwise, retry to install Chainer with cuDNN.
-``-vvvv`` option helps you.
-See :ref:`install_cudnn`.
+Cythonのインストールに失敗している可能性があります.
+手動でインストールしてみてください.
+参考 :ref:`install_error`.
+
+
+Examples を実行すると "cuDNN is not enabled" と表示される
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+cuDNNを利用したChainerのビルドに失敗しています.
+cuDNNを利用しない場合, このメッセージを無視してください.
+cuDNNを利用する場合, Chainerのインストール(cuDNN利用)の手順をもう一度行ってください.
+``-vvvv`` オプションが, 役に立つかもしれません.
+参考 :ref:`install_cudnn`.
