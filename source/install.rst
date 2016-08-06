@@ -7,15 +7,15 @@
 事前準備
 ----
 
-以下のプラットフォームでの利用を推奨しています.
+以下のOSでの利用を推奨しています.
 
 * `Ubuntu <http://www.ubuntu.com/>`_ 14.04 LTS 64bit
 * `CentOS <https://www.centos.org/>`_ 7 64bit
 
-ChainerはPython 2.7.6+, 3.4.3+, 3.5.1+をサポートしています.
+Chainerは ``Python 2.7.6… , 3.4.3… , 3.5.1…`` をサポートしています.
 Chainerはg++などのC++コンパイラを使用します.
 Chainerをインストールする前に, C++コンパイラをインストールしてください.
-各推奨プラットフォームでは, 以下のコマンドでインストールすることができます.
+各推奨OSでは, 以下のコマンドでインストールすることができます.
 
 .. code-block:: bash
 
@@ -52,7 +52,7 @@ Chainerは, 以下のバージョンのcuDNNをサポートしています.
 Chainerは, 以下のバージョンのCaffe Modelをサポートしています.
 
 * `Protocol Buffers <https://developers.google.com/protocol-buffers/>`_
-* Py3では, protobuf>=3.0.0を必要としています.
+* Py3では, ``protobuf>=3.0.0`` を必要としています.
 
 上記のライブラリはすべて ``pip`` や ``setup.py`` でChainerと同時にインストールされます.
 
